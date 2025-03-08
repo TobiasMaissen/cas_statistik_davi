@@ -1,11 +1,3 @@
-"""
-Dieses Skript demonstriert die Integration von Plotly-Grafiken in eine Shiny for Python Anwendung.
-Hauptkomponenten für die Integration:
-1. shinywidgets: Paket für die Integration interaktiver Widgets
-2. plotly.express: Für die einfache Erstellung von Plotly-Grafiken
-3. render_widget Decorator: Für das Rendern der Plotly-Figur
-"""
-
 from pathlib import Path
 import pandas as pd
 import numpy as np
@@ -116,7 +108,8 @@ with ui.card(full_screen=True):
         # Plotly bietet umfangreiche Möglichkeiten zur Layoutanpassung
         # update_layout() konfiguriert das gesamte Erscheinungsbild
         fig.update_layout(
-            height=800,              # Feste Höhe der Grafik
+            # height=800,              # Feste Höhe der Grafik
+            autosize=True,
             showlegend=True,         # Legende anzeigen
             yaxis={
                 'categoryorder': 'total ascending'  # Sortierung
