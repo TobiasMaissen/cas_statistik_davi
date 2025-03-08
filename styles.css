@@ -1,0 +1,94 @@
+:root {
+    --bs-body-bg: #000000;
+    --bs-body-color: #ffffff;
+    --bs-primary: #2f7df1;
+}
+
+.value-box-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.value-box-showcase {
+    opacity: 0.8;
+}
+
+/* Value-Boxen kompakter machen */
+.value-box {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    height: auto;
+}
+
+/* Spezifische Klasse für kompakte Value-Boxen */
+.compact-value-box {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.compact-value-box h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.compact-value-box small {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Einfache Card-Styles */
+.card {
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 0.5rem;
+    margin-bottom: 20px;
+    background-color: #1a1a1a;
+}
+
+/* Beide Grafik-Karten gleich groß machen */
+.card:has([id*="age_distribution"]),
+.card:has([id*="median_age"]) {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    background-color: rgba(255, 250, 250, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-body {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Grafik-Container sollen den verfügbaren Platz ausfüllen */
+.shiny-plot-output,
+.html-widget-output {
+    flex: 1;
+    display: flex;
+}
+
+/* Einfache Styles für Grafiken */
+.shiny-plot-output img {
+    max-width: 100%;
+    height: auto;
+}
+
+.projection-note {
+    color: #ffd700;
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* Plotly-Grafiken sollen den verfügbaren Platz ausfüllen */
+.js-plotly-plot, 
+.plotly-graph-div,
+.plot-container {
+    width: 100% !important;
+    height: 100% !important;
+    flex: 1;
+} 
