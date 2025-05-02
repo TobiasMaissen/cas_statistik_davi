@@ -116,62 +116,8 @@ with ui.sidebar(open="desktop"):
 # Überschrift
 ui.h1("Bevölkerungsanalyse", class_="mt-3")
 
-# Value Boxes für wichtige Kennzahlen
-with ui.layout_columns(fill=False):
-    with ui.value_box(showcase=ui.HTML('<i class="fa-solid fa-users" style="color: #2ecc71;"></i>')):
-        "Männliche Bevölkerung"
-        
-        @render.express
-        def total_male():
-            male_data, _ = get_population_data()
-            if male_data.empty:
-                "Keine Daten"
-            else:
-                total = sum(
-                    male_data[col].iloc[0] / 1_000_000
-                    for col in male_data.columns 
-                    if '__sex_male__age_' in col
-                )
-                f"{total:.2f} Millionen"
-    
-    with ui.value_box(showcase=ui.HTML('<i class="fa-solid fa-users" style="color: #e74c3c;"></i>')):
-        "Weibliche Bevölkerung"
-        
-        @render.express
-        def total_female():
-            _, female_data = get_population_data()
-            if female_data.empty:
-                "Keine Daten"
-            else:
-                total = sum(
-                    female_data[col].iloc[0] / 1_000_000
-                    for col in female_data.columns 
-                    if '__sex_female__age_' in col
-                )
-                f"{total:.2f} Millionen"
-    
-    with ui.value_box(showcase=ui.HTML('<i class="fa-solid fa-chart-line" style="color: #3498db;"></i>')):
-        "Medianes Alter"
-        
-        @render.express
-        def median_age_value():
-            year_data, is_projection = get_median_data()
-            if year_data.empty:
-                "Keine Daten"
-            else:
-                entity_data = year_data[year_data["entities"] == "World"]
-                if entity_data.empty:
-                    "Keine Daten für 'World'"
-                else:
-                    value = entity_data["median_age_combined"].iloc[0]
-                    
-                    if is_projection:
-                        ui.HTML(f"{value:.1f} Jahre <span class='projection-note'>(Projektion)</span>")
-                    else:
-                        f"{value:.1f} Jahre"
-
-# Hauptgrafiken
-with ui.layout_columns(col_widths=[12, 12], col_widths_md=[6, 6]):
+# Hauptgrafiken - Direkt ohne Value-Boxen
+with ui.layout_columns(col_widths=[6, 6]):
     # Altersverteilung nach Geschlecht
     with ui.card(full_screen=True):
         ui.card_header("Altersverteilung nach Geschlecht")
@@ -236,12 +182,14 @@ with ui.layout_columns(col_widths=[12, 12], col_widths_md=[6, 6]):
                 yaxis_title='Altersgruppe',
                 barmode='relative',
                 bargap=0.1,
-                height='100%',
+                autosize=True,
+                # height=600,
                 template='plotly_dark',
+                margin=dict(l=80, r=30, t=80, b=80),
                 legend=dict(
                     orientation="h",
                     yanchor="bottom",
-                    y=-0.2,
+                    y=1.02,
                     xanchor="center",
                     x=0.5
                 ),
@@ -250,6 +198,11 @@ with ui.layout_columns(col_widths=[12, 12], col_widths_md=[6, 6]):
                     zeroline=True,
                     zerolinecolor='black',
                     zerolinewidth=1
+                ),
+                yaxis=dict(
+                    autorange=True,
+                    gridcolor='lightgray',
+                    dtick=1  # Zeigt jeden Tick an
                 )
             )
             
@@ -304,11 +257,13 @@ with ui.layout_columns(col_widths=[12, 12], col_widths_md=[6, 6]):
                 }
             )
             
-            # Layout anpassen
+            # Layout anpassen für das Medianes Alter Diagramm
             fig.update_layout(
                 template="plotly_dark",
                 showlegend=False,
-                height='100%',
+                autosize=True,
+                # height=600,
+                margin=dict(l=80, r=30, t=80, b=80),
                 yaxis=dict(
                     range=[0, year_data["median_age_combined"].max() * 1.2],
                     gridcolor='lightgray'
