@@ -61,7 +61,7 @@ plt.style.use('dark_background')
 
 # Seitenkonfiguration
 ui.page_opts(
-    title="Bevölkerungsanalyse Dashboard (Matplotlib)",
+    title="Bevölkerungsanalyse Dashboard",
     fillable=True,
     theme=theme.darkly
 )
@@ -91,7 +91,7 @@ with ui.sidebar(open="desktop"):
         "Jahr:",
         min=min(available_years),
         max=max(available_years),
-        value=2023
+        value=1950
     )
     
     ui.hr()
@@ -102,7 +102,7 @@ with ui.sidebar(open="desktop"):
         "Jahr:",
         min=1950,
         max=2100,
-        value=2023
+        value=1950
     )
     
     ui.hr()
@@ -118,7 +118,7 @@ with ui.sidebar(open="desktop"):
 # ============================================================================
 
 # Überschrift
-ui.h1("Bevölkerungsanalyse (Matplotlib)", class_="mt-3")
+ui.h1("Bevölkerungsanalyse", class_="mt-3")
 
 # Hauptgrafiken
 with ui.layout_columns(col_widths=[6, 6]):
@@ -290,8 +290,8 @@ def get_median_data():
 @reactive.effect
 @reactive.event(input.reset)
 def _():
-    ui.update_slider("year", value=2023)
-    ui.update_slider("median_year", value=2023)
+    ui.update_slider("year", value=1950)
+    ui.update_slider("median_year", value=1950)
     ui.update_select("entity", selected="World")
     animating_age_distribution.set(False) # Stop animation on reset
     ui.update_action_button("play_age_distribution", label="Play") # Reset button label
